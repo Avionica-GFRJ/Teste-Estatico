@@ -10,7 +10,7 @@
 #include <SD.h>
 #include <Q2HX711.h>
 //------------------------------------------------------------
-const float calibrador = 336.66; //Mudar aqui o número de calibração da célula de carga no 'calibrador'
+const float calibrador = -1000;//Mudar aqui o número de calibração da célula de carga no 'calibrador'
 //------------------------------------------------------------
 const int  Tscan = 100; // Scan time in milisseconds
 //const int  pressIn = A0;  // Pressure input
@@ -18,7 +18,7 @@ const byte hx711_data_pin = A1;
 const byte hx711_clock_pin = A0;
 //const byte hx711_data_pin = 2; //esses dois pinos, data e clock são programáveis para utilização do sensoriamento de pressão futuramente
 //const byte hx711_clock_pin = 3;
-const float span = 1; //constante relacionada com as propriedades mecânicas da célula de carga
+const float span = 10; //constante relacionada com as propriedades mecânicas da célula de carga
 const float k1 = (500/4)*5.0/1023.0; //usado para captação de pressão
 const float k2 = (500/4)*0.5;  //usado para captação de pressão
 long  cont=0;
@@ -63,8 +63,10 @@ void loop() {
   empuxo = span*2*((-hx711.read()-emp0)/(128*(-calibrador)));//Aqui fica o parâmetro de calibração para obter os dados de kgf
   //Serial.print(cont++);
   //Serial.print(" ;");
+  Serial.print("Tempo: ");
   Serial.print(seg,3); //printa o tempo, com 3 casas decimais
-  Serial.print(";");
+  Serial.println(";");
+  Serial.print("Empuxo: ");
   Serial.print(empuxo,5); //(printa os dados, número de casas decimais), no monitor serial!
  //Serial.print("kg");
  // Serial.print(" ;");
@@ -74,7 +76,7 @@ void loop() {
   Serial.print("Temperatura: "); //IMPRIME O TEXTO NO MONITOR SERIAL
   Serial.print(ktc.readCelsius()); //IMPRIME NO MONITOR SERIAL A TEMPERATURA MEDIDA
   Serial.println("*C"); //IMPRIME O TEXTO NO MONITOR SERIAL
-  Serial.print(";");
+  Serial.println("--------------------------------------------------------");
   delay(500); //INTERVALO DE 500 MILISSEGUNDOS
 }
   
