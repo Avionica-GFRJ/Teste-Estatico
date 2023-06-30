@@ -37,8 +37,8 @@ void loop() {
    Serial.print(" °C"); //IMPRIME O TEXTO NO MONITOR SERIAL
    Serial.print("\t");
    
-   //double sensorPValue = (1000/4.0)*((5.0*analogRead(A0)/1023.0)-0.55);
-   double sensorPValue = (5.0*analogRead(A0)/1023.0);
+   double sensorPValue = (1000/4.0)*((5.0*analogRead(A0)/1023.0)-0.55)+15.31; //Valor em PSI
+   //double sensorPValue = (5.0*analogRead(A0)/1023.0); //Valor em Volts
    Serial.print("Pressão: "); //IMPRIME O TEXTO NO MONITOR SERIAL
    Serial.print(sensorPValue);
    Serial.println(" psi"); //IMPRIME O TEXTO NO MONITOR SERIAL
