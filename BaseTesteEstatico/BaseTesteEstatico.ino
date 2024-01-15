@@ -13,6 +13,9 @@ int ktcCLK = 10; //PINO DIGITAL (CLK / SCK)
 HX711 scale; 
 MAX6675 ktc(ktcCLK, ktcCS, ktcSO); //CRIA UMA INSTÂNCIA UTILIZANDO OS PINOS (CLK, CS, SO)
 
+int cont = 9;
+float t = 0;
+
 void setup() {
   Serial.begin(57600);
   scale.begin(LOADCELL_DOUT_PIN, LOADCELL_SCK_PIN);
@@ -21,6 +24,8 @@ void setup() {
 void loop() {
 
   //   long tempo = millis();
+  Serial.print(millis());
+  Serial.print("\t");
 
   if (scale.is_ready()) {
     double reading = ((scale.read() - 289300.0)*3.0/(306700.0 - 289300.0)+0.87);
@@ -30,10 +35,13 @@ void loop() {
     Serial.print("\t");
   } else {
     Serial.print("HX711 not found.");
-  }
-
+  }  
+   if(cont++==9){
+   t = ktc.readCelsius();
+   cont = 0; 
+   }
    Serial.print("Temperatura: "); //IMPRIME O TEXTO NO MONITOR SERIAL
-   Serial.print(ktc.readCelsius()); //IMPRIME NO MONITOR SERIAL A TEMPERATURA MEDIDA
+   Serial.print(t); //IMPRIME NO MONITOR SERIAL A TEMPERATURA MEDIDA
    Serial.print(" °C"); //IMPRIME O TEXTO NO MONITOR SERIAL
    Serial.print("\t");
    
